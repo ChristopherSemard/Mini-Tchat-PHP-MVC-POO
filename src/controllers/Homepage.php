@@ -12,6 +12,7 @@ class Homepage
 {
     public function execute()
     {
+        session_start();
         $messageRepository = new MessageRepository();
         $messageRepository->connection = new DatabaseConnection();
         $messages = $messageRepository->getMessages();

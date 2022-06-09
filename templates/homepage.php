@@ -1,5 +1,7 @@
 <?php $title = "Accueil"; ?>
 
+
+
 <?php ob_start(); ?>
 
     <h2 class="text-center h-10">TCHAT</h2>
@@ -18,7 +20,31 @@
                 }
             ?>
     </div>
-</main>
+
+
+    <?php if (isset($_SESSION['LOGGED_USER'])): ?>
+        <form class="container mt-auto h-10 d-flex align-items-end" method="POST" action="../index.php?action=submitmessage">
+            <div class="row  w-100">
+                <div class="form-group col-10">
+                    <input type="text" class="form-control" id="inputMessage" name="message" placeholder="Message">
+                </div>
+                <button type="submit" class="btn btn-primary col-2"><i class="bi bi-send-fill"></i></button>
+            </div>
+        </form> 
+    <?php endif ?>
+    
+    <?php if (!isset($_SESSION['LOGGED_USER'])): ?>
+        <form class="container mt-auto h-10 d-flex align-items-end" method="POST" action="../index.php?action=submitmessage">
+                <div class="row  w-100">
+                    <div class="form-group col-10">
+                        <input type="text" class="form-control" id="inputMessage" name="message" placeholder="Connectez vous pour pouvoir écrire" disabled>
+                    </div>
+                    <button type="submit" class="btn btn-primary col-2" disabled><i class="bi bi-send-fill"></i></button>
+                </div>
+            </form>
+    <?php endif ?>
+
+
 
 <?php $content = ob_get_clean(); ?>
 

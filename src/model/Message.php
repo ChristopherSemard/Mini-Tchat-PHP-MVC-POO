@@ -35,4 +35,10 @@ class MessageRepository
         }
         return $messages;
     }
+
+    public function addMessage($message, $userId)
+    {
+        $statement = $this->connection->getConnection()->prepare('INSERT INTO messages (message, user_id, date) VALUES (:message, :user_id, NOW())');
+        $statement->execute(['message' => $message,'user_id' => $userId]);
+    }
 }
