@@ -13,7 +13,7 @@ class User
     public string $password;
     public string $color;
 
-    public DatabaseConnection $connection;
+    protected DatabaseConnection $connection;
 
     public function getUserByPseudo($pseudo){
         $userStatement = $this->connection->getConnection()->prepare('SELECT * FROM users WHERE pseudo = :pseudo');
@@ -30,11 +30,22 @@ class User
         $user->color = $userDB['color'];
         return $user;
     }
+
+    public function addUser($user){
+        $hashPassword = password_hash($user->password, PASSWORD_BCRYPT);
+        $statement = $this->connection->getConnection()->prepare('INSERT INTO users (pseudo, password, color) VALUES (:pseudo, :password, :color)');
+        $statement->execute(['pseudo' => $user->pseudo,'password' => $hashPassword,'color' => $user->color]);
+    }
+
+
     public function createSession($user){
         $userTable = [
             'id_user' => $user->id,
             'pseudo' => $user->pseudo,
         ];
         $_SESSION['LOGGED_USER'] = $userTable;
+    }
+    public function createDBConnection(){
+        $this->connection = new DatabaseConnection();
     }
 }

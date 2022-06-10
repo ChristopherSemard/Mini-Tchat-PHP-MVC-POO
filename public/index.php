@@ -23,7 +23,13 @@ try {
             }
             (new Login())->login($input); 
         } elseif ($_GET['action'] === 'signin') {
-            (new SignIn())->execute();
+            (new SignIn())->displayFormSignIn();
+        }  elseif ($_GET['action'] === 'submitsignin') {
+            $input = null;
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $input = $_POST;
+            }
+            (new SignIn())->signin($input); 
         } elseif ($_GET['action'] === 'logout') {
             (new Logout())->logout();
         } elseif ($_GET['action'] === 'submitmessage') {

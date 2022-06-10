@@ -41,4 +41,5 @@ class MessageRepository
         $statement = $this->connection->getConnection()->prepare('INSERT INTO messages (message, user_id, date) VALUES (:message, :user_id, NOW())');
         $statement->execute(['message' => $message,'user_id' => $userId]);
     }
+    
 }

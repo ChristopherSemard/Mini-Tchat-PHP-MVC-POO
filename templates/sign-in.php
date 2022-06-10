@@ -4,11 +4,11 @@
 
 
     <h2 class="text-center mb-4">INSCRIPTION</h2>
-    <form class="container  d-flex flex-column gap-3" method="POST" action="./submit-inscription.php">
+    <form class="container  d-flex flex-column gap-3" method="POST" action="../index.php?action=submitsignin">
         <!-- Choix de pseudo -->
         <div class="form-group">
             <label for="inputPseudo">Pseudo</label>
-            <input type="text" class="form-control" id="inputPseudo" name="pseudo" placeholder="Pseudo" required>
+            <input type="text" class="form-control" id="inputPseudo" name="pseudo" placeholder="Pseudo" value="<?= isset($_SESSION['ERROR_SIGNIN']) ? $_SESSION['ERROR_SIGNIN_INPUT']['pseudo'] : '' ?>" required>
         </div>
         <!-- Choix de mot de passe -->
         <div class="form-group">
@@ -23,10 +23,15 @@
         <!-- Choix de couleur -->
         <div class="form-group d-flex align-items-center justify-content-between">
             <label for="inputColor">Couleur du pseudo</label>
-            <input type="color"  id="inputColor" name="color" value="#ffdd00">
+            <input type="color"  id="inputColor" name="color" value="<?= isset($_SESSION['ERROR_SIGNIN']) ? $_SESSION['ERROR_SIGNIN_INPUT']['color'] : '#ffdd00' ?>">
         </div>
         <!-- Bouton envoyer -->
         <button type="submit" class="btn btn-primary">Valider</button>
+        
+        <?php if (isset($_SESSION['ERROR_SIGNIN'])): ?>
+            <p class='text-center alert alert-danger mt-2' role='alert'><?= $_SESSION['ERROR_SIGNIN'] ?></p>
+            <?php endif ?>
+            
     </form>
 
 

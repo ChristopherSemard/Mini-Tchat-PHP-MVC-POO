@@ -17,6 +17,7 @@ class Login
         require('../templates/login.php');
         unset($_SESSION['ERROR_LOGIN']);
         unset($_SESSION['ERROR_LOGIN_INPUT']);
+        unset($_SESSION['SUCCESS_SIGNIN']);
     }
 
     
@@ -26,7 +27,7 @@ class Login
         if(!empty($input)) {
             if(isset($input['pseudo']) && !empty($input['pseudo']) && isset($input['password']) && !empty($input['password'])) {
                 $user = new User;
-                $user->connection = new DatabaseConnection();
+                $user->createDBConnection();
                 $userTable = $user->getUserByPseudo(strip_tags($input['pseudo']));
 
 
@@ -37,8 +38,8 @@ class Login
                     exit;
                 }
 
-                // if(password_verify($input['password'], $user->password)) {
-                if($input['password'] == $userTable->password) {
+                if(password_verify($input['password'], $userTable->password)) {
+                // if($input['password'] == $userTable->password) {
                     $user->createSession($userTable);
                     header('Location: ../index.php');
                     exit;
